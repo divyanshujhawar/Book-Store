@@ -59,7 +59,7 @@ app.use(expressValidator({
 }));
 
 app.use(flash());
-
+// the required function is added here
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
