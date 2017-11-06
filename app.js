@@ -13,7 +13,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-var io = ('socket.io');
+
+var io = require('socket.io');
+
 //mongoose.connect('mongodb://bhavin:bhavin@ds147454.mlab.com:47454/bookshelf');
 mongoose.connect('mongodb://localhost/bookshelf');
 var db = mongoose.connection;
