@@ -1,0 +1,47 @@
+var express = require('express');
+var router = express.Router();
+var fs = require('fs');
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
+var assert = require('assert');
+var url = 'mongodb://localhost:27017/bookshelf';
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+   /*res.render('index', {success: false, errors: req.session.error});
+   req.session.errors = null;*/
+
+   res.render('hi');
+});
+
+router.get('/user', function(req, res, next) {
+  res.send('respond with a resource');
+});
+
+router.get('/welcome/:id', function(req, res, next) {
+  res.render('welcome', {output: req.params.id});
+});
+
+
+router.post('/submit', function(req,res,next){
+     var item = {
+    first_name: req.body.user,
+    mail      : req.body.email,
+    password: req.body.pass
+  };
+
+  var fname = req.body.user;
+
+  mongo.connect(url, function(err, db) {
+    assert.equal(null, err);
+    db.collection('user').insertOne(item, function(err, result) {
+      assert.equal(null, err);
+      console.log('Item inserted');
+      db.close();
+    });
+  });
+
+  res.redirect('welcome/' + fname);
+});
+
+module.exports = router;

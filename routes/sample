@@ -1,0 +1,20 @@
+router.post('/submit', function(req,res,next){
+     var item = {
+    first_name: req.body.name,
+    mail      : req.body.email,
+    password: req.body.pass
+  };
+
+  var fname = req.body.name;
+
+  mongo.connect(url, function(err, db) {
+    assert.equal(null, err);
+    db.collection('user').insertOne(item, function(err, result) {
+      assert.equal(null, err);
+      console.log('Item inserted');
+      db.close();
+    });
+  });
+
+  res.render('welcome', {output: fname});
+});
